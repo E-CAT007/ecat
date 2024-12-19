@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECAT - Educational Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1c1c1c, #333);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+            padding: 20px;
+        }
+        header {
+            width: 100%;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+        h1, p {
+            margin-bottom: 0.5rem;
+        }
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #4CAF50;
+        }
+        p {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+        .container {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            overflow-y: auto;
+            margin-bottom: 2rem;
+        }
+        .video-container {
+            margin-bottom: 2rem;
+        }
+        iframe {
+            width: 100%;
+            height: 315px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .btn {
+            background: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            text-align: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background: #45a049;
+        }
+        .login-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .login-panel h2 {
+            margin-bottom: 20px;
+        }
+        .login-form input {
+            padding: 1rem;
+            margin: 1rem 0;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            background: #222;
+            color: white;
+            font-size: 1rem;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 1rem;
+            background: #2196F3;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .login-form button:hover {
+            background: #1976D2;
+        }
+        .thumbnail {
+            width: 100%;
+            max-width: 300px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .admin-panel {
+            display: none;
+        }
+        .admin-form input {
+            padding: 1rem;
+            margin: 1rem 0;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            background: #222;
+            color: white;
+            font-size: 1rem;
+        }
+        .admin-form button {
+            width: 100%;
+            padding: 1rem;
+            background: #FF5722;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .admin-form button:hover {
+            background: #E64A19;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to ECAT</h1>
+        <p>Transforming Lives, One Coaching Session at a Time. Your Success Story Starts Here.</p>
+    </header>
+
+    <!-- Left Side - Student Login -->
+    <div id="student-login" class="login-panel">
+        <h2>Student Login</h2>
+        <div class="login-form">
+            <input type="password" id="student-password" placeholder="Enter Password">
+            <button class="btn" onclick="studentLogin()">Login</button>
+        </div>
+    </div>
+
+    <!-- Right Side - Admin Login -->
+    <div id="admin-login" class="login-panel">
+        <h2>Admin Login</h2>
+        <div class="login-form">
+            <input type="password" id="admin-password" placeholder="Enter Admin Password">
+            <button class="btn" onclick="adminLogin()">Login</button>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="admin-panel">
+        <h2>Admin Panel</h2>
+        <div class="admin-form">
+            <h3>Change Student Password</h3>
+            <input type="password" id="new-password" placeholder="Enter New Password">
+            <button class="btn" onclick="changePassword()">Change Password</button>
+            <h3>Update YouTube Video Link</h3>
+            <input type="text" id="youtube-link" placeholder="Enter YouTube Video ID">
+            <button class="btn" onclick="updateYoutubeLink()">Update Video</button>
+            <h3>Update Google Meet Link</h3>
+            <input type="text" id="meet-link" placeholder="Enter Google Meet Link">
+            <button class="btn" onclick="updateMeetLink()">Update Meet Link</button>
+        </div>
+    </div>
+
+    <!-- Videos Section -->
+    <div id="video-section" class="container">
+        <h2>Videos</h2>
+        <div class="thumbnail" id="video-thumbnail">
+            <img src="https://via.placeholder.com/300" alt="Video Thumbnail" id="video-thumb" onclick="playVideo()">
+            <p>Click to Play</p>
+        </div>
+    </div>
+
+    <!-- Google Meet Link Section -->
+    <div id="meet-link-section" class="container">
+        <h2>Join Google Meet</h2>
+        <button class="btn" id="meet-link-btn" onclick="joinMeet()">Join Now</button>
+    </div>
+
+    <script>
+        // Default passwords
+        const defaultStudentPassword = "12345";
+        const adminPassword = "Password1*";
+
+        let studentPassword = defaultStudentPassword;
+
+        // Video and Google Meet link
+        let youtubeVideoLink = "https://www.youtube.com/embed/VIDEO_ID"; // Default video
+        let meetLink = "https://meet.google.com/your-meeting-link"; // Default Meet link
+
+        // Student Login Function
+        function studentLogin() {
+            const password = document.getElementById("student-password").value;
+            if (password === studentPassword) {
+                alert("Login successful!");
+                showVideosAndMeet();
+            } else {
+                alert("Incorrect password!");
+            }
+        }
+
+        // Admin Login Function
+        function adminLogin() {
+            const password = document.getElementById("admin-password").value;
+            if (password === adminPassword) {
+                document.getElementById("admin-login").style.display = "none";
+                document.getElementById("admin-panel").style.display = "block";
+            } else {
+                alert("Incorrect admin password!");
+            }
+        }
+
+        // Change Student Password Function
+        function changePassword() {
+            const newPassword = document.getElementById("new-password").value;
+            if (newPassword) {
+                studentPassword = newPassword;
+                alert("Password changed successfully!");
+                document.getElementById("new-password").value = "";
+            } else {
+                alert("Please enter a new password.");
+            }
+        }
+
+        // Update YouTube Video Link Function
+        function updateYoutubeLink() {
+            const newVideoId = document.getElementById("youtube-link").value;
+            if (newVideoId) {
+                youtubeVideoLink = `https://www.youtube.com/embed/${newVideoId}`;
+                alert("YouTube Video updated successfully!");
+                document.getElementById("youtube-link").value = "";
+            } else {
+                alert("Please enter a valid YouTube Video ID.");
+            }
+        }
+
+        // Update Google Meet Link Function
+        function updateMeetLink() {
+            const newMeetLink = document.getElementById("meet-link").value;
+            if (newMeetLink) {
+                meetLink = newMeetLink;
+                alert("Google Meet link updated successfully!");
+                document.getElementById("meet-link").value = "";
+            } else {
+                alert("Please enter a valid Google Meet link.");
+            }
+        }
+
+        // Show videos and meet links after student login
+        function showVideosAndMeet() {
+            document.getElementById("video-thumbnail").style.display = "block";
+            document.getElementById("meet-link-btn").style.display = "inline-block";
+            document.getElementById("student-login").style.display = "none";
+        }
+
+        // Play Video Function (Embed YouTube Video)
+        function playVideo() {
+            const videoSection = document.getElementById("video-section");
+            const iframe = document.createElement("iframe");
+            iframe.src = youtubeVideoLink;
+            iframe.frameborder = "0";
+            iframe.allowfullscreen = true;
+            videoSection.innerHTML = "";
+            videoSection.appendChild(iframe);
+        }
+
+        // Join Google Meet Function (Redirect to Meet Link)
+        function joinMeet() {
+            window.open(meetLink, "_blank");
+        }
+
+        // Initialize page view
+        window.onload = function() {
+            document.getElementById("video-thumbnail").style.display = "none";
+            document.getElementById("meet-link-btn").style.display = "none";
+        };
+    </script>
+</body>
+</html>
